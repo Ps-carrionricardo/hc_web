@@ -61,7 +61,7 @@ export default function PadronPage() {
   /** ================================
    * GUARDAR CONSULTA EN SUPABASE
    =================================*/
-  const guardarConsulta = async (formData) => {
+  const guardarConsulta = async (formData: any) => {
     try {
       const { error } = await supabase.from("consultas").insert({
         dni: consultaDni,
