@@ -48,7 +48,7 @@ export default function PadronPage() {
   /** ================================
    * ABRIR MODAL CONSULTA
    =================================*/
-  const abrirModalConsulta = (dni, nombre) => {
+  const abrirModalConsulta = (dni: any, nombre: any) => {
     setConsultaDni(dni);
     setConsultaNombre(nombre);
     setModalConsultaAbierto(true);
