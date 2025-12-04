@@ -1,0 +1,381 @@
+/* ===============================================
+   BASE GENERAL
+================================================ */
+.pami-root {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #0d6efd 0, #012735 45%, #00141f 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #f5f7fb;
+}
+
+.pami-shell {
+  width: 100%;
+  max-width: 1380px;
+  background: linear-gradient(135deg, rgba(0, 31, 51, 0.97), rgba(0, 60, 88, 0.95));
+  border-radius: 26px;
+  padding: 22px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+
+
+/* ===============================================
+   TOPBAR
+================================================ */
+.pami-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pami-header-logo {
+  object-fit: contain;
+}
+
+.header-title-center {
+  flex: 1;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+
+
+/* ===============================================
+   LAYOUT
+================================================ */
+.pami-main {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 65px 2fr 1.5fr 1.8fr;
+  gap: 22px;
+}
+
+
+
+/* ===============================================
+   SIDEBAR
+================================================ */
+.pami-sidebar {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-btn {
+  border-radius: 14px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #e2edf8;
+  padding: 8px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.sidebar-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+
+
+/* ===============================================
+   CALENDARIO
+================================================ */
+.pami-calendar-card {
+  background: rgba(4, 31, 48, 0.95);
+  border-radius: 22px;
+  padding: 18px;
+}
+
+.pami-calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-month-btn {
+  width: 35px;
+  height: 35px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #e6f0ff;
+  cursor: pointer;
+}
+
+.pami-weekdays {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  color: #9bb5cf;
+  font-size: 12px;
+}
+
+.pami-calendar-grid {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pami-week-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.pami-day {
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  padding: 8px;
+  text-align: left;
+  color: white;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.pami-day:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.pami-day.selected {
+  background: linear-gradient(135deg, #fddc5c, #ffb23c);
+  color: #052335;
+}
+
+.pami-day.empty {
+  background: transparent;
+  cursor: default;
+}
+
+
+
+/* ===============================================
+   FORM NUEVO TURNO
+================================================ */
+.pami-form-card {
+  background: rgba(4, 31, 48, 0.95);
+  border-radius: 22px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pami-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pami-field span {
+  font-size: 13px;
+}
+
+.pami-field input,
+.pami-field textarea,
+.pami-select {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(168, 195, 222, 0.4);
+  border-radius: 10px;
+  padding: 8px 10px;
+  color: white;
+  font-size: 14px;
+}
+
+.pami-select option {
+  background: white;
+  color: black;
+}
+
+.pami-primary-btn {
+  margin-top: 10px;
+  background: linear-gradient(135deg, #fddc5c, #ffb23c);
+  color: #052335;
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+
+/* ===============================================
+   LISTA DE TURNOS
+================================================ */
+.pami-daylist-card {
+  background: rgba(4, 31, 48, 0.95);
+  border-radius: 22px;
+  padding: 26px;
+}
+
+.daylist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.daylist-grid-2col {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.daylist-ficha {
+  background: white;
+  color: #152b3b;
+  padding: 12px;
+  border-radius: 14px;
+  display: grid;
+  grid-template-columns: 38px 1fr 40px;
+  gap: 8px;
+  align-items: center;
+  border-left: 4px solid #007bff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.ficha-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paciente-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #004a7c;
+  position: relative;
+}
+
+.paciente-icon::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 13px;
+  width: 32px;
+  height: 16px;
+  border-radius: 999px;
+  border: 2px solid #004a7c;
+  border-top: none;
+}
+
+.ficha-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+}
+
+.ficha-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ficha-consulta-btn,
+.ficha-fin-btn,
+.ficha-delete-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+
+/* Botones */
+.ficha-consulta-btn {
+  color: #004a7c;
+}
+
+.ficha-consulta-btn.completa {
+  background: #0aa368;
+  color: white;
+}
+
+.ficha-fin-btn {
+  background: linear-gradient(135deg, #1c8f3c, #27b454);
+  color: white;
+}
+
+.ficha-delete-btn {
+  background: linear-gradient(135deg, #c82333, #e74c3c);
+  color: white;
+}
+
+
+/* ===============================================
+   MODAL CONSULTA
+================================================ */
+.consulta-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.consulta-modal {
+  background: #f9fbff;
+  color: #052335;
+  border-radius: 18px;
+  padding: 20px 24px;
+  width: 650px;
+  max-width: 95%;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.consulta-bloque textarea {
+  background: white;
+  border: none;
+  padding: 8px 10px;
+  min-height: 60px;
+  resize: vertical;
+  font-size: 13px;
+}
+
+
+/* ===============================================
+   Paginación
+================================================ */
+.daylist-pagination {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.daylist-pagination button {
+  border-radius: 999px;
+  padding: 6px 12px;
+  border: 1px solid #c4d3e2;
+  background: #0a2740;
+  color: #f5f7fb;
+  cursor: pointer;
+}
+
+.daylist-pagination button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

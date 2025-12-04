@@ -1,0 +1,294 @@
+.consulta-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+.consulta-titulo {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* BUSCADOR */
+
+.consulta-buscador-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.consulta-buscador-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.consulta-buscador-input-group {
+  width: 100%;
+}
+
+.consulta-buscador-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.consulta-label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+  color: #444;
+}
+
+.consulta-input {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d0d0d0;
+  font-size: 0.95rem;
+}
+
+.consulta-input:focus,
+.consulta-textarea:focus {
+  outline: none;
+  border-color: #2d7ff9;
+  box-shadow: 0 0 0 1px rgba(45, 127, 249, 0.2);
+}
+
+.consulta-btn-primario,
+.consulta-btn-secundario {
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.consulta-btn-primario {
+  background: #2d7ff9;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(45, 127, 249, 0.35);
+}
+
+.consulta-btn-primario:hover {
+  background: #225fbe;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(45, 127, 249, 0.4);
+}
+
+.consulta-btn-primario:disabled {
+  opacity: 0.6;
+  cursor: default;
+  box-shadow: none;
+  transform: none;
+}
+
+.consulta-btn-secundario {
+  background: #f3f5fb;
+  color: #1f3b6f;
+  border: 1px solid #d6ddf5;
+}
+
+.consulta-btn-secundario:hover {
+  background: #e4e9ff;
+}
+
+.consulta-btn-primario.grande {
+  padding: 10px 24px;
+  font-size: 1rem;
+}
+
+/* PACIENTE RESUMEN */
+
+.consulta-paciente-resumen {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #e0e0e0;
+  font-size: 0.9rem;
+}
+
+.consulta-paciente-resumen h2 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+/* LAYOUT PRINCIPAL */
+
+.consulta-layout {
+  margin-top: 8px;
+}
+
+.consulta-form-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px 20px 22px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.consulta-form-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.consulta-form-col h2 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.consulta-form-col h3 {
+  font-size: 0.95rem;
+  margin: 10px 0 6px;
+  font-weight: 600;
+}
+
+.consulta-field {
+  margin-bottom: 8px;
+}
+
+.consulta-field-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.consulta-textarea {
+  width: 100%;
+  min-height: 70px;
+  resize: vertical;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d0d0d0;
+  font-size: 0.95rem;
+}
+
+/* ESTUDIOS */
+
+.consulta-estudios-card {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #eceef5;
+}
+
+.consulta-estudios-card h2 {
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+
+.consulta-estudios-ayuda {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.consulta-estudios-upload-row {
+  margin-bottom: 8px;
+}
+
+.consulta-estudios-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.consulta-estudios-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: #f4f6ff;
+  font-size: 0.8rem;
+}
+
+.consulta-estudios-item a {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.consulta-estudios-quitar {
+  border: none;
+  border-radius: 999px;
+  width: 22px;
+  height: 22px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  background: #ffe4e4;
+  color: #a02323;
+}
+
+.consulta-estudios-quitar:hover {
+  background: #ffcccc;
+}
+
+/* ALERTAS Y ACCIONES */
+
+.consulta-alerta-error {
+  margin-top: 10px;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  background: #ffe5e5;
+  color: #8b1e1e;
+  border-radius: 8px;
+}
+
+.consulta-alerta-ok {
+  margin-top: 10px;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  background: #e1f8e8;
+  color: #146b35;
+  border-radius: 8px;
+}
+
+.consulta-acciones {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .consulta-form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .consulta-buscador-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .consulta-btn-primario,
+  .consulta-btn-secundario {
+    width: 100%;
+  }
+
+  .consulta-acciones {
+    justify-content: center;
+  }
+
+  .consulta-page {
+    padding-inline: 10px;
+  }
+}

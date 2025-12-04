@@ -1,0 +1,90 @@
+.padron-container.light {
+  padding: 20px;
+  min-height: 100vh;
+  background: #f5f7fa;
+  color: #1a1a1a;
+}
+
+/* TÍTULO */
+.padron-container.light .padron-title {
+  color: #0b2d5b;
+  font-size: 32px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* BUSCADOR */
+.padron-container.light .padron-buscador {
+  width: 350px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #b8c4d9;
+  background: white;
+  color: #1a1a1a;
+  outline: none;
+  margin-bottom: 15px;
+}
+
+.padron-container.light .padron-buscador::placeholder {
+  color: #8d98aa;
+}
+
+/* TABLA */
+.padron-container.light table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+}
+
+.padron-container.light th {
+  text-align: left;
+  padding: 12px;
+  background: #e7eef9;
+  color: #0b2d5b;
+  font-weight: 700;
+  border-radius: 6px 6px 0 0;
+}
+
+.padron-container.light td {
+  padding: 12px;
+  background: white;
+  border-bottom: 1px solid #d4d4d4;
+  color: #2d3748;
+}
+
+.padron-container.light tr:hover td {
+  background: #f1f5fb;
+}
+
+/* BOTÓN CONSULTA */
+.padron-container.light .btn-consulta {
+  padding: 6px 12px;
+  background: #0d63d1;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.padron-container.light .btn-consulta:hover {
+  background: #094a9c;
+}
+
+/* SWITCH TEMAS */
+.theme-switch {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.theme-button {
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: #0d63d1;
+  color: white;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+}

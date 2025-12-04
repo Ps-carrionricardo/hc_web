@@ -1,0 +1,163 @@
+.consulta-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.consulta-modal {
+  background: #f7faff;
+  width: 900px;
+  max-height: 90vh;
+  border-radius: 20px;
+  padding: 25px 30px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  overflow-y: auto;
+}
+
+.consulta-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f1d3a;
+  margin-bottom: 0;
+}
+
+.consulta-subtitle {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #4e5b76;
+}
+
+/* TA / PESO */
+.consulta-row-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.top-label {
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: #e2e8f5;
+  color: #1c2b4a;
+  font-weight: 600;
+}
+
+.top-label.active {
+  background: #d8deef;
+}
+
+.ta-input,
+.peso-input {
+  width: 70px;
+  padding: 6px 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #b9c4d9;
+  background: #fff;
+}
+
+.unidad {
+  color: #6c7a96;
+  font-size: 14px;
+}
+
+.slash {
+  font-size: 20px;
+  margin: 0 5px;
+}
+
+/* CAMPOS EN DOS COLUMNAS (label al costado) */
+.consulta-field-row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.consulta-label-col {
+  width: 30%;
+  min-width: 180px;
+  background: #e5e9f3;
+  border-radius: 10px 0 0 10px;
+  padding: 10px 12px;
+  font-weight: 600;
+  color: #1c2b4a;
+  display: flex;
+  align-items: center;
+}
+
+.consulta-input-col {
+  flex: 1;
+}
+
+.consulta-input-col textarea {
+  width: 100%;
+  min-height: 70px;
+  border: 1px solid #c3cfe6;
+  border-left: none;
+  resize: vertical;
+  padding: 10px;
+  border-radius: 0 10px 10px 0;
+  background: white;
+  outline: none;
+}
+
+/* BOTÓN ESTUDIOS */
+.consulta-add {
+  background: #0d63d1;
+  color: white;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  margin-top: 12px;
+}
+
+.consulta-add:hover {
+  background: #094a9c;
+}
+
+.consulta-estudios {
+  margin-top: 6px;
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+.consulta-nota {
+  font-size: 13px;
+  color: #6a7387;
+  margin-top: 10px;
+  margin-bottom: 18px;
+}
+
+/* FOOTER */
+.consulta-footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-cerrar {
+  background: #e4e7ef;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
+
+.btn-guardar {
+  background: #05a47c;
+  color: white;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
