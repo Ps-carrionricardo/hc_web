@@ -12,28 +12,32 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  // -------------------------------------------
-  // 🩵 LOGIN — FUNCIONA CON ENTER
-  // -------------------------------------------
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
-    console.log("Intentando login...");
+    // 1) Buscar solo por email
+    const { data, error: err } = await supabase
+      .from("usuario")
+      .select("*")
+      .eq("email", email)
+      .single();
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    console.log("DATA:", data);
-    console.log("ERROR:", error);
-
-    if (error) {
+    if (err || !data) {
       setError("Usuario o contraseña incorrectos");
       return;
     }
 
+    // 2) Validar la contraseña manualmente
+    if (data.password !== password) {
+      setError("Usuario o contraseña incorrectos");
+      return;
+    }
+
+    // 3) Guardar el rol en localStorage
+    localStorage.setItem("rol", data.rol);
+
+    // 4) Redirigir al dashboard
     router.push("/dashboard");
   };
 
@@ -41,13 +45,9 @@ export default function LoginPage() {
     <div className="login-container">
       <div className="login-card">
 
-        <div className="login-icon">
-          🏥
-        </div>
-
+        <div className="login-icon">🏥</div>
         <h2 className="login-title">Ingreso al sistema</h2>
 
-        {/* FORMULARIO COMPLETO */}
         <form onSubmit={login} className="login-form">
 
           <input
@@ -72,6 +72,7 @@ export default function LoginPage() {
             Ingresar
           </button>
         </form>
+        
       </div>
     </div>
   );
