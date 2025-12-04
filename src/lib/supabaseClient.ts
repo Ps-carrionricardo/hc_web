@@ -1,13 +1,12 @@
-"use client";
-
 import { createClient } from "@supabase/supabase-js";
 
-// 🚨 Así se leen las variables en Next.js (versión cliente)
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    persistSession: false, // cliente liviano
+    persistSession: true,        // 🔥 Mantiene la sesión guardada
+    autoRefreshToken: true,      // 🔥 Renueva sesión automáticamente
+    detectSessionInUrl: true,    // 🔥 Necesario para que funcione el login
   },
 });

@@ -16,28 +16,24 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
 
-    // 1) Buscar solo por email
-    const { data, error: err } = await supabase
-      .from("usuario")
-      .select("*")
-      .eq("email", email)
-      .single();
+    // 🔥 LOGIN REAL DE SUPABASE AUTH
+    const { data, error: err } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-    if (err || !data) {
+    if (err) {
       setError("Usuario o contraseña incorrectos");
       return;
     }
 
-    // 2) Validar la contraseña manualmente
-    if (data.password !== password) {
-      setError("Usuario o contraseña incorrectos");
-      return;
+    // 🔥 GUARDAR EL ROL (si usás roles custom)
+    // Podés obtenerlo de user_metadata
+    if (data.user?.user_metadata?.rol) {
+      localStorage.setItem("rol", data.user.user_metadata.rol);
     }
 
-    // 3) Guardar el rol en localStorage
-    localStorage.setItem("rol", data.rol);
-
-    // 4) Redirigir al dashboard
+    // 🔥 REDIRIGIR
     router.push("/dashboard");
   };
 

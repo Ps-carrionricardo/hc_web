@@ -2,35 +2,40 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabaseClient";
 import BuscarPacienteModal from "../../components/BuscarPacienteModal/BuscarPacienteModal";
 import "./dashboard.css";
 
 export default function Dashboard() {
   const router = useRouter();
 
-  // --- ESTADOS ---
   const [rol, setRol] = useState<string | null | undefined>(undefined);
   const [modalConsulta, setModalConsulta] = useState(false);
   const [modalFicha, setModalFicha] = useState(false);
 
-  // --- CHEQUEO INICIAL ---
+  // 🔥 VALIDACIÓN REAL DE SESIÓN
   useEffect(() => {
-    const r = localStorage.getItem("rol");
+    const checkSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
 
-    if (!r) {
-      router.replace("/login");
-      return;
-    }
+      if (error || !data.session) {
+        router.replace("/login");
+        return;
+      }
 
-    setRol(r);
+      const rolUser = data.session.user.user_metadata?.rol || null;
+      setRol(rolUser);
+    };
+
+    checkSession();
   }, [router]);
 
-  // --- LOADING ---
+  // LOADING
   if (rol === undefined) {
     return <div className="dash-wrapper">Cargando...</div>;
   }
 
-  // --- NAVEGACIÓN ---
+  // FUNCIONES
   const irAConsulta = (dni: string) => {
     router.push(`/consulta-medica/${dni}`);
   };
@@ -39,12 +44,12 @@ export default function Dashboard() {
     router.push(`/ficha-clinica/${dni}`);
   };
 
-  const cerrarSesion = () => {
-    localStorage.removeItem("rol");
-    router.push("/login");
+  const cerrarSesion = async () => {
+    await supabase.auth.signOut();
+    router.replace("/login");
   };
 
-  // --- UI ---
+  // UI PRINCIPAL
   return (
     <div className="dash-wrapper">
 
@@ -70,7 +75,7 @@ export default function Dashboard() {
           <h2>Agenda</h2>
         </div>
 
-        {/* CONSULTA MÉDICA */}
+        {/* CONSULTA */}
         {rol !== "secretaria" && (
           <div className="dash-card" onClick={() => setModalConsulta(true)}>
             <i className="bi bi-heart-pulse-fill dash-icon"></i>
@@ -78,11 +83,12 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* FICHA CLÍNICA */}
+        {/* FICHA */}
         <div className="dash-card" onClick={() => setModalFicha(true)}>
           <i className="bi bi-file-medical-fill dash-icon"></i>
           <h2>Ficha Clínica</h2>
         </div>
+
       </div>
 
       {/* MODALES */}
