@@ -8,7 +8,7 @@ import "./padron-light.css";
 import "./padron-dark.css";
 
 export default function PadronPage() {
-  const [padron, setPadron] = useState([]);
+  const [padron, setPadron] = useState<any[]>([]);
   const [busqueda, setBusqueda] = useState("");
 
   // tema: "dark" o "light"
