@@ -8,13 +8,16 @@ import "./dashboard.css";
 export default function Dashboard() {
   const router = useRouter();
 
+  // --- ESTADOS ---
   const [rol, setRol] = useState<string | null | undefined>(undefined);
+  const [modalConsulta, setModalConsulta] = useState(false);
+  const [modalFicha, setModalFicha] = useState(false);
 
+  // --- CHEQUEO INICIAL ---
   useEffect(() => {
     const r = localStorage.getItem("rol");
 
     if (!r) {
-      // 🔥 Si no hay rol, redirigimos directo al login
       router.replace("/login");
       return;
     }
@@ -22,12 +25,12 @@ export default function Dashboard() {
     setRol(r);
   }, [router]);
 
-  // ⏳ Mientras chequeamos el rol, mostramos loading
+  // --- LOADING ---
   if (rol === undefined) {
     return <div className="dash-wrapper">Cargando...</div>;
   }
 
-  // ---- NAVEGACIÓN ----
+  // --- NAVEGACIÓN ---
   const irAConsulta = (dni: string) => {
     router.push(`/consulta-medica/${dni}`);
   };
@@ -41,8 +44,10 @@ export default function Dashboard() {
     router.push("/login");
   };
 
+  // --- UI ---
   return (
     <div className="dash-wrapper">
+
       <h1 className="dash-title">Bienvenido Dr. Cáceres</h1>
 
       <button className="btn-logout" onClick={cerrarSesion}>
@@ -50,6 +55,8 @@ export default function Dashboard() {
       </button>
 
       <div className="dash-grid">
+
+        {/* PADRÓN */}
         {rol === "admin" && (
           <div className="dash-card" onClick={() => router.push("/padron")}>
             <i className="bi bi-people-fill dash-icon"></i>
@@ -57,11 +64,13 @@ export default function Dashboard() {
           </div>
         )}
 
+        {/* AGENDA */}
         <div className="dash-card" onClick={() => router.push("/agenda")}>
           <i className="bi bi-calendar-week dash-icon"></i>
           <h2>Agenda</h2>
         </div>
 
+        {/* CONSULTA MÉDICA */}
         {rol !== "secretaria" && (
           <div className="dash-card" onClick={() => setModalConsulta(true)}>
             <i className="bi bi-heart-pulse-fill dash-icon"></i>
@@ -69,6 +78,7 @@ export default function Dashboard() {
           </div>
         )}
 
+        {/* FICHA CLÍNICA */}
         <div className="dash-card" onClick={() => setModalFicha(true)}>
           <i className="bi bi-file-medical-fill dash-icon"></i>
           <h2>Ficha Clínica</h2>
@@ -87,6 +97,7 @@ export default function Dashboard() {
         cerrar={() => setModalFicha(false)}
         accion={irAFicha}
       />
+
     </div>
   );
 }
