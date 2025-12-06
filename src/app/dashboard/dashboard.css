@@ -69,3 +69,134 @@
 .btn-logout:hover {
   background: #8b0000;
 }
+/* Tarjeta con efecto Glow */
+.dash-card.glow {
+  position: relative;
+  border-radius: 15px !important;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dash-card.glow::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #006dff, #00d4ff, #006dff);
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0.55;
+}
+
+.dash-card.glow:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 18px rgba(0, 140, 255, 0.4);
+}
+
+.dash-card.glow:hover::before {
+  filter: blur(14px);
+  opacity: 0.8;
+}
+/* ============================== */
+/*   ANIMACIÓN AL CARGAR PANTALLA */
+/* ============================== */
+
+.dash-wrapper {
+  animation: fadeIn 0.7s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ============================== */
+/*  ESTILO GENERAL DE TARJETAS    */
+/* ============================== */
+
+.dash-card {
+  position: relative;
+  border-radius: 15px !important;
+  overflow: hidden;
+  background: white;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid #dce7f5;
+}
+
+/* Hover general (todas las tarjetas) */
+.dash-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 18px rgba(0, 140, 255, 0.3);
+}
+
+/* Icono animado */
+.dash-card:hover .dash-icon {
+  transform: scale(1.2) rotate(1deg);
+  transition: 0.3s ease;
+}
+
+/* ============================== */
+/*       EFECTO GLOW GLOBAL       */
+/*       (Para TODAS las cards)   */
+/* ============================== */
+
+.dash-card::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #006dff, #00d4ff, #006dff);
+  z-index: -1;
+  filter: blur(16px);
+  opacity: 0.22;
+}
+
+/* Hover Glow más fuerte */
+.dash-card:hover::before {
+  opacity: 0.50;
+  filter: blur(20px);
+}
+
+
+/* ============================== */
+/*    ANIMACIÓN ESPECIAL EXTRA    */
+/*  (Entrada suave de cada card)  */
+/* ============================== */
+
+.dash-card {
+  animation: cardEnter 0.6s ease forwards;
+  opacity: 0;
+}
+
+@keyframes cardEnter {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Delay progresivo para cada tarjeta */
+.dash-card:nth-child(1) { animation-delay: 0.05s; }
+.dash-card:nth-child(2) { animation-delay: 0.15s; }
+.dash-card:nth-child(3) { animation-delay: 0.25s; }
+.dash-card:nth-child(4) { animation-delay: 0.35s; }
+.dash-card:nth-child(5) { animation-delay: 0.45s; }
+
+
+/* ============================== */
+/*   HOVER EXTRA PARA EL TÍTULO   */
+/* ============================== */
+
+.dash-card h2 {
+  transition: 0.25s ease;
+}
+
+.dash-card:hover h2 {
+  color: #005fff;
+  letter-spacing: 0.5px;
+}
