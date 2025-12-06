@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { supabase } from "../../lib/supabaseClient";  // <-- ESTA LÍNEA
+import { supabase } from "../../lib/supabaseClient";
 import "./estilos.css";
 
 type Turno = {
