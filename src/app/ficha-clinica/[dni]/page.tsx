@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
-import "./estilos.css";
+import "./estilo_moderno.css";  // 🔵 ← Nuevo CSS moderno
 
 type Paciente = {
   Apellido_y_Nombre: string;
@@ -31,12 +31,12 @@ type Turno = {
 export default function FichaClinicaPage() {
   const params = useParams<{ dni: string }>();
   const router = useRouter();
-
   const dniParam = params?.dni;
 
   const [paciente, setPaciente] = useState<Paciente | null>(null);
   const [turnos, setTurnos] = useState<Turno[]>([]);
-  const [ultimoDiagnostico, setUltimoDiagnostico] = useState<string>("—");
+  const [ultimoMotivo, setUltimoMotivo] = useState<string>("—");
+  const [proximaConsulta, setProximaConsulta] = useState<string>("—");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -53,20 +53,27 @@ export default function FichaClinicaPage() {
 
       setPaciente(pacienteData as Paciente);
 
-      // Consultas médicas
+      // Turnos
       const { data: turnosData } = await supabase
         .from("turnos")
         .select("*")
         .eq("dni", dniParam)
-        .order("fecha", { ascending: false }); // ← la última consulta según fecha
+        .order("fecha", { ascending: false });
 
       if (turnosData) {
         setTurnos(turnosData as Turno[]);
-
-        // Última consulta = primer elemento
         const ultima = turnosData[0];
-        if (ultima?.diagnostico) {
-          setUltimoDiagnostico(ultima.diagnostico);
+
+        if (ultima?.motivo_consulta) {
+          setUltimoMotivo(ultima.motivo_consulta);
+        }
+
+        // Próxima consulta (última + 31 días)
+        if (ultima?.fecha) {
+          const fechaUltima = new Date(ultima.fecha);
+          const fechaProxima = new Date(fechaUltima);
+          fechaProxima.setDate(fechaUltima.getDate() + 31);
+          setProximaConsulta(fechaProxima.toISOString().split("T")[0]);
         }
       }
 
@@ -76,207 +83,109 @@ export default function FichaClinicaPage() {
     cargarDatos();
   }, [dniParam]);
 
-  const calcularEdad = (fechaNac?: string, edadCampo?: number) => {
-    if (edadCampo && edadCampo > 0) return edadCampo;
-    if (!fechaNac) return null;
-    const nacimiento = new Date(fechaNac);
-    if (Number.isNaN(nacimiento.getTime())) return null;
-
-    const hoy = new Date();
-    let edad = hoy.getFullYear() - nacimiento.getFullYear();
-
-    const m = hoy.getMonth() - nacimiento.getMonth();
-    if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
-      edad--;
-    }
-    return edad;
-  };
-
-  const edadCalculada = calcularEdad(
-    paciente?.Fecha_de_Nacimiento,
-    paciente?.Edad
-  );
-
-  const handleImprimir = () => {
-    window.print();
-  };
-
-  if (loading) {
-    return (
-      <div className="ficha-wrapper">
-        <p>Cargando ficha clínica...</p>
-      </div>
-    );
-  }
-
-  if (!paciente) {
-    return (
-      <div className="ficha-wrapper">
-        <p>No se encontró el paciente.</p>
-      </div>
-    );
-  }
+  if (loading) return <div className="cargando">Cargando Ficha...</div>;
+  if (!paciente) return <div className="cargando">Paciente no encontrado</div>;
 
   return (
-    <div className="ficha-wrapper">
+    <div className="ficha-container">
 
-      {/* CABECERA SUPERIOR */}
-      <div className="ficha-header no-print">
-        <button
-          className="ficha-btn-volver"
-          onClick={() => router.push("/dashboard")}
-        >
-          ← Volver
-        </button>
-      </div>
-
-      <div className="ficha-page">
-
-        {/* ENCABEZADO AZUL */}
-        <header className="ficha-encabezado">
-          <div className="ficha-encabezado-icono">
-            <i className="bi bi-hospital"></i>
-          </div>
-          <h1 className="ficha-titulo">FICHA MÉDICA</h1>
-          <div className="ficha-obra-social">
-            <span>Obra Social</span>
-            <strong>PAMI</strong>
-            <i className="bi bi-plus-lg"></i>
-          </div>
-        </header>
-
-        {/* DATOS DEL MÉDICO */}
-        <section className="ficha-medico">
-          <p>Médico de Cabecera: Cáceres Daniel Marcelo</p>
-          <p>Matrícula Prov.: 1553</p>
-          <p>Matrícula Nac.: 146901</p>
-        </section>
-
-        {/* DATOS DEL PACIENTE */}
-        <section className="ficha-bloque ficha-paciente">
-          <div className="ficha-bloque-titulo verde">
-            <i className="bi bi-person-fill ficha-icon"></i>
-            <span>DATOS DEL PACIENTE</span>
-          </div>
-
-          <div className="ficha-paciente-body">
-            <p><strong>Paciente:</strong> {paciente.Apellido_y_Nombre}</p>
-            <p>
-              <strong>DNI:</strong> {paciente.dni}  
-              <strong>N° Afiliado:</strong> {paciente.Nro_de_Beneficio || "—"}
-            </p>
-
-            <p>
-              <strong>Fecha de nacimiento:</strong>{" "}
-              {paciente.Fecha_de_Nacimiento || "—"}  
-              <strong>Edad:</strong> {edadCalculada ?? "—"} años
-            </p>
-
-            <p><strong>Teléfono:</strong> {paciente.Telefono || "—"}</p>
-          </div>
-        </section>
-
-        {/* ANAMNESIS DINÁMICA */}
-        <section className="ficha-bloque ficha-anamnesis">
-          <div className="ficha-bloque-titulo violeta">
-            <i className="bi bi-journal-medical ficha-icon"></i>
-            <span>ANAMNESIS</span>
-          </div>
-
-          <div className="ficha-anamnesis-body">
-            <p>
-              Paciente que se presenta a consulta con un diagnóstico principal de:{" "}
-              <strong>{ultimoDiagnostico}</strong>, y control de sus patologías de base.
-            </p>
-          </div>
-        </section>
-
-        {/* HISTORIAL DE CONSULTAS */}
-        <section className="ficha-bloque ficha-historial">
-          <div className="ficha-bloque-titulo azul">
-            <i className="bi bi-clock-history ficha-icon"></i>
-            <span>HISTORIAL DE CONSULTAS</span>
-          </div>
-
-          <div className="ficha-consultas-lista">
-            {turnos.length === 0 && <p>No hay consultas registradas.</p>}
-
-            {turnos.map((t) => (
-              <div key={t.id} className="ficha-consulta-card">
-
-                {/* HEADER */}
-                <div className="ficha-consulta-header">
-                  <p><strong>Fecha:</strong> {t.fecha}</p>
-
-                  <p>
-                    <strong>TA:</strong>{" "}
-                    {t.ta_sistolica && t.ta_diastolica
-                      ? `${t.ta_sistolica}/${t.ta_diastolica} mmHg`
-                      : "—"}
-                    {"   "}
-                    <strong>Peso:</strong>{" "}
-                    {t.peso != null ? `${t.peso} Kg` : "—"}
-                  </p>
-                </div>
-
-                {/* BODY */}
-                <div className="ficha-consulta-body">
-                  <p><strong>Motivo de consulta:</strong> {t.motivo_consulta || "—"}</p>
-
-                  <p><strong>Examen físico:</strong> {t.examen_fisico || "—"}</p>
-
-                  <p><strong>Diagnóstico:</strong> {t.diagnostico || "—"}</p>
-
-                  {/* TRATAMIENTO COMO LISTA */}
-                  <p><strong>Tratamiento / indicaciones:</strong></p>
-
-                  {t.tratamiento ? (
-                    <ul className="listaMedicamentos">
-                      {t.tratamiento
-                        .split(",")
-                        .map((i) => i.trim())
-                        .filter((i) => i.length > 0)
-                        .map((med, idx) => (
-                          <li key={idx}>{med}</li>
-                        ))}
-                    </ul>
-                  ) : (
-                    <p>—</p>
-                  )}
-
-                  <p><strong>Observaciones:</strong> {t.observaciones || "—"}</p>
-
-                  {/* ESTUDIOS */}
-                  <div className="ficha-consulta-estudios">
-                    <strong>Estudios complementarios:</strong>{" "}
-                    {t.estudios_urls && t.estudios_urls.length > 0 ? (
-                      <ul>
-                        {t.estudios_urls.map((url, index) => (
-                          <li key={index}>
-                            <a href={url} target="_blank">
-                              Ver estudio {index + 1}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <span>Sin particularidad</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ACCIONES */}
-        <div className="ficha-acciones no-print">
-          <button className="ficha-btn-imprimir" onClick={handleImprimir}>
-            🖨 Imprimir ficha clínica
-          </button>
+      {/* ENCABEZADO PRINCIPAL */}
+      <header className="ficha-header-modern">
+        <div className="header-left">
+          <i className="bi bi-hospital large-icon"></i>
+          <h1>FICHA MÉDICA</h1>
         </div>
 
+        <div className="header-right">
+          <span>Obra Social</span>
+          <strong>PAMI</strong>
+          <i className="bi bi-plus-lg"></i>
+        </div>
+      </header>
+
+      {/* DATOS DEL MÉDICO */}
+      <section className="card medico-card">
+        <h2><i className="bi bi-person-vcard"></i> DATOS DEL MÉDICO</h2>
+        <p><strong>Médico:</strong> Cáceres Daniel Marcelo</p>
+        <p><strong>Matrícula Prov.:</strong> 1553</p>
+        <p><strong>Matrícula Nac.:</strong> 146901</p>
+      </section>
+
+      {/* DATOS DEL PACIENTE */}
+      <section className="card paciente-card">
+        <h2><i className="bi bi-person-fill"></i> DATOS DEL PACIENTE</h2>
+
+        <div className="fila">
+          <p><strong>Paciente:</strong> {paciente.Apellido_y_Nombre}</p>
+          <p><strong>DNI:</strong> {paciente.dni}</p>
+        </div>
+
+        <div className="fila">
+          <p><strong>N° Afiliado:</strong> {paciente.Nro_de_Beneficio || "—"}</p>
+          <p><strong>Teléfono:</strong> {paciente.Telefono || "—"}</p>
+        </div>
+
+        <div className="fila">
+          <p><strong>Fecha de Nacimiento:</strong> {paciente.Fecha_de_Nacimiento || "—"}</p>
+          <p><strong>Edad:</strong> {paciente.Edad || "—"} Años</p>
+        </div>
+      </section>
+
+      {/* ANAMNESIS */}
+      <section className="card anamnesis-card amarillo">
+        <h2><i className="bi bi-journal-medical"></i> ANAMNESIS</h2>
+        <p>
+          Paciente que se presenta con motivo principal de:
+          <strong> {ultimoMotivo}</strong>.
+        </p>
+      </section>
+
+      {/* HISTORIAL DE CONSULTAS */}
+      <section className="card historial-card azul">
+        <h2><i className="bi bi-clock-history"></i> HISTORIAL DE CONSULTAS</h2>
+
+        {turnos.length === 0 && <p>No hay consultas registradas.</p>}
+
+        {turnos.map((t) => (
+          <div key={t.id} className="consulta-item">
+            <div className="consulta-header">
+              <p><strong>Fecha:</strong> {t.fecha}</p>
+              <p><strong>TA:</strong> {t.ta_sistolica}/{t.ta_diastolica} mmHg</p>
+              <p><strong>Peso:</strong> {t.peso || "—"} Kg</p>
+            </div>
+
+            <p><strong>Motivo:</strong> {t.motivo_consulta}</p>
+            <p><strong>Examen Físico:</strong> {t.examen_fisico}</p>
+            <p><strong>Diagnóstico:</strong> {t.diagnostico}</p>
+            <p><strong>Tratamiento:</strong> {t.tratamiento}</p>
+            <p><strong>Observaciones:</strong> {t.observaciones}</p>
+
+            <div>
+              <strong>Estudios:</strong>{" "}
+              {t.estudios_urls?.length ? (
+                t.estudios_urls.map((url, index) => (
+                  <a key={index} href={url} target="_blank">Ver {index + 1}</a>
+                ))
+              ) : (
+                "Sin particularidad"
+              )}
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* PRÓXIMA CONSULTA */}
+      <section className="card proxima-card verde-claro">
+        <h2><i className="bi bi-calendar-event"></i> PRÓXIMA CONSULTA</h2>
+        <p>Se sugiere próxima consulta a partir de: <strong>{proximaConsulta}</strong></p>
+      </section>
+
+      {/* ACCIONES */}
+      <div className="acciones">
+        <button onClick={() => router.push("/dashboard")} className="btn-volver">← Volver</button>
+        <button onClick={() => window.print()} className="btn-imprimir">🖨 Imprimir</button>
       </div>
+
     </div>
   );
 }

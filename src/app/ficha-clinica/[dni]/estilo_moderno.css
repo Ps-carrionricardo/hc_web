@@ -1,0 +1,95 @@
+/* CONTENEDOR GENERAL */
+.ficha-container {
+  max-width: 900px;
+  margin: 20px auto;
+  font-family: "Segoe UI", sans-serif;
+  color: #003050;
+}
+
+/* HEADER PRINCIPAL */
+.ficha-header-modern {
+  background: linear-gradient(to right, #0a4c8c, #0c6cc4);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ficha-header-modern .header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.large-icon {
+  font-size: 38px;
+}
+
+/* TARJETAS */
+.card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 18px;
+  border-left: 6px solid #0a4c8c22;
+  box-shadow: 0px 3px 6px #0000000e;
+}
+
+.card h2 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #0a4c8c;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* VARIANTES */
+.azul { border-left-color: #0a6cc4; }
+.amarillo { border-left-color: #e9c84b; }
+.verde-claro { border-left-color: #8bc34a; }
+
+/* FILAS */
+.fila {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* CONSULTAS */
+.consulta-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+.consulta-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ACCIONES */
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-volver, .btn-imprimir {
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-volver {
+  background: #ddd;
+}
+
+.btn-imprimir {
+  background: #0a6cc4;
+  color: white;
+}
